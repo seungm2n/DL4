@@ -1,52 +1,28 @@
+'''
+    * 텐서(tensor)
+        - 배열(array)이나 행렬(matrix)과 매우 유사한 특수한 자료구조
+'''
+# list로부터 tensor 생성하기   --- copy 본 생성
 import torch
-from torch import nn
-from torch.utils.data import DataLoader
-from torchvision import datasets
-from torchvision.transforms import ToTensor, Lambda, Compose
-import matplotlib.pyplot as plt
 import numpy as np
 
-# MNIST Data down 받기
-# 공개 데이터셋에서 학습 데이터를 내려받기
-training_data = datasets.MNIST(
-    root='data',
-    train=True,
-    download=True,
-    transform=ToTensor()
-)
+data = [[1,2],[3,4]]
+x_data = torch.tensor(data)
+print(x_data)
 
-# 공개 데이터셋에서 테스트 데이터를 내려받기
-test_data = datasets.MNIST(
-    root='data',
-    train=False,
-    download=True,
-    transform=ToTensor()
-)
+# numpy array로부터 tensor 생성하기
+np_array = np.array(data)
+x_np_1 = torch.tensor(np_array)
+print(x_np_1)
 
-'''
-    * 데이터 준비
-        1) torch.utils.data import DataLoader
-            데이터로더 (DataLoader) 객체
-                - 학습에 사용될 데이터 전체를 보관했다가 모델 학습을 할 때 배치 크기만큼 데이터를 꺼내서 사용
-        2) 내부적으로 반복차(iterator)에 포함된 인덱스를 이용ㅇ해 배치 크기만큼 반환함
-'''
-batch_size = 64
+x_np_2 = torch.as_tensor(np_array)      # view를 만듦
+print(x_np_2)
 
-# 데이터로더 생성
-train_dataloader = DataLoader(training_data, batch_size=batch_size)
-test_dataloader = DataLoader(test_data, batch_size=batch_size)
+x_np_3 = torch.as_tensor(np_array)      # view를 만듦
+print(x_np_3)
 
-for X, y in test_dataloader:
-    print("Shape of X : ", X.shape)
-    print("Shape of y : ", y.shape, y.dtype)
-    break
-
-# 학습에 사용할 CPU나 GPU 장치를 열기
-
-# 모델을 정의 (class 정의)
-
-# Loss 함수와 Optimizer 설정
-
-# Training을 위한 함수
-
-# Test를 위한 함수
+x_np_1[0, 0] = 5
+print(x_np_1)
+print(np_array)
+print(x_np_2)
+print(x_np_3)
